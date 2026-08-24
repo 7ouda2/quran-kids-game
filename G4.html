@@ -7,37 +7,28 @@
     <link rel="stylesheet" href="G4.css">
 </head>
 <body>
-    <header class="game-header">
-        <a href="1st.html" class="back-btn">⬅️ العودة للرئيسية</a>
-        <h2>🔗 لعبة وصل الآية بالمعنى</h2>
-    </header>
+    <div class="game-container">
+        <header class="game-header">
+            <a href="index.html" class="back-btn">⬅️ العودة للرئيسية</a>
+            <h2>🔗 لعبة وصل الآية بالمعنى</h2>
+        </header>
 
-    <main class="game-play-section">
-        <div class="game-container">
-            <!-- Sidebar Tabs -->
-            <div class="sidebar-tabs">
-                <button class="tab-btn active" onclick="switchMatchSurah('ikhlas', this)">
-                    <span>🖼️</span> سورة الإخلاص
-                </button>
-                <button class="tab-btn" onclick="switchMatchSurah('falaq', this)">
-                    <span>🎯</span> سورة الفلق
-                </button>
-                <button class="tab-btn" onclick="switchMatchSurah('nas', this)">
-                    <span>🧩</span> سورة الناس
-                </button>
-            </div>
-
-            <div class="game-box">
-                <div class="quiz-info">
-                    <span id="surah-title">سورة الإخلاص</span>
-                    <span>النقاط: <span id="score-count">0</span></span>
-                </div>
-                <p class="game-hint">اضغط على الآية ثم اضغط على المعنى المناسب لها:</p>
-                <div class="match-container"></div>
-                <div id="feedback" class="feedback"></div>
-            </div>
+        <div class="sidebar-tabs">
+            <button class="tab-btn active" onclick="switchMatchSurah('ikhlas', this)">🖼️ سورة الإخلاص</button>
+            <button class="tab-btn" onclick="switchMatchSurah('falaq', this)">🎯 سورة الفلق</button>
+            <button class="tab-btn" onclick="switchMatchSurah('nas', this)">🧩 سورة الناس</button>
         </div>
-    </main>
+
+        <div class="game-box">
+            <div class="quiz-info">
+                <span id="surah-title">سورة الإخلاص</span>
+                <span>النقاط: <span id="score-count">0</span></span>
+            </div>
+            <p class="game-hint">اضغط على الآية ثم اضغط على المعنى المناسب لها:</p>
+            <div class="match-container"></div>
+            <div id="feedback" class="feedback"></div>
+        </div>
+    </div>
 
     <script src="G4.js"></script>
 </body>

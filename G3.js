@@ -56,13 +56,12 @@ const surahData = {
 let currentSurahKey = 'ikhlas';
 let score = 0;
 let draggedItem = null;
+let touchClone = null;
 
 function switchMatchSurah(surahKey, btnElement) {
     currentSurahKey = surahKey;
-    
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
     if (btnElement) btnElement.classList.add('active');
-    
     initGame();
 }
 
@@ -90,8 +89,14 @@ function initGame() {
         card.innerText = item.text;
         card.dataset.matchId = item.matchId;
 
+        // أحداث الماوس للكمبيوتر
         card.addEventListener('dragstart', dragStart);
         card.addEventListener('dragend', dragEnd);
+
+        // أحداث اللمس للموبايل
+        card.addEventListener('touchstart', handleTouchStart, {passive: false});
+        card.addEventListener('touchmove', handleTouchMove, {passive: false});
+        card.addEventListener('touchend', handleTouchEnd);
 
         versesCol.appendChild(card);
     });
@@ -115,6 +120,7 @@ function initGame() {
     container.appendChild(meaningsCol);
 }
 
+/* === أحداث الماوس (PC) === */
 function dragStart() {
     draggedItem = this;
     setTimeout(() => this.classList.add('hide'), 0);
@@ -125,33 +131,83 @@ function dragEnd() {
     draggedItem = null;
 }
 
-function dragOver(e) {
-    e.preventDefault();
-}
-
-function dragEnter(e) {
-    e.preventDefault();
-    this.classList.add('hovered');
-}
-
-function dragLeave() {
-    this.classList.remove('hovered');
-}
+function dragOver(e) { e.preventDefault(); }
+function dragEnter(e) { e.preventDefault(); this.classList.add('hovered'); }
+function dragLeave() { this.classList.remove('hovered'); }
 
 function dragDrop() {
     this.classList.remove('hovered');
+    checkMatch(draggedItem, this);
+}
+
+/* === أحداث اللمس (Mobile) === */
+function handleTouchStart(e) {
+    draggedItem = this;
+    const touch = e.touches[0];
+
+    // إنشاء نسخة عائمة تتبع الإصبع
+    touchClone = this.cloneNode(true);
+    touchClone.style.position = 'fixed';
+    touchClone.style.left = `${touch.clientX - 50}px`;
+    touchClone.style.top = `${touch.clientY - 30}px`;
+    touchClone.style.width = `${this.offsetWidth}px`;
+    touchClone.style.opacity = '0.85';
+    touchClone.style.pointerEvents = 'none';
+    touchClone.style.zIndex = '1000';
+    touchClone.style.borderColor = '#8b5e3c';
+
+    document.body.appendChild(touchClone);
+    this.classList.add('hide');
+}
+
+function handleTouchMove(e) {
+    if (!touchClone) return;
+    e.preventDefault(); // منع التمرير أثناء السحب
+    const touch = e.touches[0];
+
+    touchClone.style.left = `${touch.clientX - (touchClone.offsetWidth / 2)}px`;
+    touchClone.style.top = `${touch.clientY - (touchClone.offsetHeight / 2)}px`;
+
+    // إبراز الصندوق أسفل الإصبع
+    const elementTarget = document.elementFromPoint(touch.clientX, touch.clientY);
+    document.querySelectorAll('.drop-zone').forEach(dz => dz.classList.remove('hovered'));
     
-    if (draggedItem && draggedItem.dataset.matchId === this.dataset.matchId) {
-        this.classList.add('correct-match');
-        this.innerHTML = `✅ ${draggedItem.innerText} <br><small>(${this.innerText})</small>`;
-        draggedItem.remove();
+    if (elementTarget && elementTarget.classList.contains('drop-zone')) {
+        elementTarget.classList.add('hovered');
+    }
+}
+
+function handleTouchEnd(e) {
+    if (touchClone) {
+        touchClone.remove();
+        touchClone = null;
+    }
+    this.classList.remove('hide');
+
+    const touch = e.changedTouches[0];
+    const dropTarget = document.elementFromPoint(touch.clientX, touch.clientY);
+    
+    document.querySelectorAll('.drop-zone').forEach(dz => dz.classList.remove('hovered'));
+
+    if (dropTarget && dropTarget.classList.contains('drop-zone')) {
+        checkMatch(draggedItem, dropTarget);
+    }
+    draggedItem = null;
+}
+
+/* === دالة التناغم والتحقق === */
+function checkMatch(item, targetZone) {
+    if (item && item.dataset.matchId === targetZone.dataset.matchId) {
+        targetZone.classList.add('correct-match');
+        targetZone.innerHTML = `✅ ${item.innerText} <br><small>(${targetZone.innerText})</small>`;
+        item.remove();
         
         score += 10;
         const scoreElem = document.getElementById('score-count');
         if (scoreElem) scoreElem.innerText = score;
-    } else {
-        this.classList.add('wrong-match');
-        setTimeout(() => this.classList.remove('wrong-match'), 800);
+    } else if (targetZone && !targetZone.classList.contains('correct-match')) {
+        targetZone.classList.add('wrong-match');
+        setTimeout(() => targetZone.classList.remove('wrong-match'), 800);
     }
 }
 

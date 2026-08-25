@@ -1,179 +1,158 @@
-// أسئلة خمن الآية (عدد الأسئلة = عدد آيات كل سورة)
-const questionsData = {
-    ikhlas: [
-        { 
-            img: "1.jpeg", 
-            hint: "💡 تلميح للآية 1: تدل على وحدانية الله سبحانه وتعالى وأن ليس له شريك.", 
-            options: ["قُلْ هُوَ اللَّهُ أَحَدٌ", "اللَّهُ الصَّمَدُ", "وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ"], 
-            correct: 0 
-        },
-        { 
-            img: "2.jpeg", 
-            hint: "💡 تلميح للآية 2: تعبر عن أن الجميع يقصد الله ويحتاج إليه وهو لا يحتاج لأحد.", 
-            options: ["لَمْ يَلِدْ وَلَمْ يُولَدْ", "اللَّهُ الصَّمَدُ", "قُلْ هُوَ اللَّهُ أَحَدٌ"], 
-            correct: 1 
-        },
-        { 
-            img: "3.jpg", 
-            hint: "💡 تلميح للآية 3: تعبر عن أن الله تعالى ليس له ولد ولا والد.", 
-            options: ["وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ", "لَمْ يَلِدْ وَلَمْ يُولَدْ", "اللَّهُ الصَّمَدُ"], 
-            correct: 1 
-        },
-        { 
-            img: "4.jpg", 
-            hint: "💡 تلميح للآية 4: تدل على أنه لا يوجد أحد مماثل أو مساوٍ لله عز وجل.", 
-            options: ["وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ", "قُلْ هُوَ اللَّهُ أَحَدٌ", "لَمْ يَلِدْ وَلَمْ يُولَدْ"], 
-            correct: 0 
-        }
-    ],
-    falaq: [
-        { 
-            img: "5.jpeg", 
-            hint: "💡 تلميح للآية 1: تعبر عن شروق الصباح ونوره والاستعاذة برب الفلق.", 
-            options: ["قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ", "مِن شَرِّ مَا خَلَقَ", "وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ"], 
-            correct: 0 
-        },
-        { 
-            img: "WhatsApp Image 2026-08-24 at 3.01.23 PM.jpeg", 
-            hint: "💡 تلميح للآية 2: تعبر عن طلب الحماية والأمان من شر جميع المخلوقات.", 
-            options: ["وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ", "مِن شَرِّ مَا خَلَقَ", "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ"], 
-            correct: 1 
-        },
-        { 
-            img: "6.jpeg", 
-            hint: "💡 تلميح للآية 3: تعبر عن دخول الليل المظلم والظلمة.", 
-            options: ["وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ", "وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ", "مِن شَرِّ مَا خَلَقَ"], 
-            correct: 0 
-        },
-        { 
-            img: "7.jpeg", 
-            hint: "💡 تلميح للآية 4: تعبر عن الحماية من أعمال السحر والعقد.", 
-            options: ["وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ", "وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ", "وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ"], 
-            correct: 1 
-        },
-        { 
-            img: "8.jpeg", 
-            hint: "💡 تلميح للآية 5: تعبر عن الوقاية من الشخص الذي يتمنى زوال النعمة عن غيره.", 
-            options: ["وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ", "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ", "وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ"], 
-            correct: 0 
-        }
-    ],
-    nas: [
-        { 
-            img: "9.jpeg", 
-            hint: "💡 تلميح للآية 1: اللجوء والاستعاذة برب البشر جميعاً.", 
-            options: ["قُلْ أَعُوذُ بِرَبِّ النَّاسِ", "إِلَهِ النَّاسِ", "مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ"], 
-            correct: 0 
-        },
-        { 
-            img: "10.jpeg", 
-            hint: "💡 تلميح للآية 2: تعبر عن ملكية الله الكاملة وسيطرته على جميع الناس.", 
-            options: ["مَلِكِ النَّاسِ", "إِلَهِ النَّاسِ", "قُلْ أَعُوذُ بِرَبِّ النَّاسِ"], 
-            correct: 0 
-        },
-        { 
-            img: "WhatsApp Image 2026-08-24 at 3.04.57 PM.jpeg", 
-            hint: "💡 تلميح للآية 3: تعبر عن أن الله هو المعبود الخالق الوحيد للناس.", 
-            options: ["مَلِكِ النَّاسِ", "إِلَهِ النَّاسِ", "الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ"], 
-            correct: 1 
-        },
-        { 
-            img: "11.jpeg", 
-            hint: "💡 تلميح للآية 4: الحماية من الشيطان الذي يختفي عند ذكر الله.", 
-            options: ["مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ", "الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ", "مِنَ الْجِنَّةِ وَالنَّاسِ"], 
-            correct: 0 
-        },
-        { 
-            img: "WhatsApp Image 2026-08-24 at 3.04.57.jpeg", 
-            hint: "💡 تلميح للآية 5: تعبر عن إلقاء الأفكار والوساوس داخل القلوب والأفئدة.", 
-            options: ["الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ", "مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ", "مِنَ الْجِنَّةِ وَالنَّاسِ"], 
-            correct: 0 
-        },
-        { 
-            img: "12.jpeg", 
-            hint: "💡 تلميح للآية 6: توضح أن الوسوسة قد تكون من الشياطين أو من أصدقاء السوء.", 
-            options: ["مِنَ الْجِنَّةِ وَالنَّاسِ", "الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ", "إِلَهِ النَّاسِ"], 
-            correct: 0 
-        }
-    ]
+// بيانات السور الكاملة
+const surahData = {
+    ikhlas: {
+        title: "سورة الإخلاص",
+        items: [
+            { id: 1, text: "قُلْ هُوَ اللَّهُ أَحَدٌ", matchId: 1 },
+            { id: 2, text: "اللَّهُ الصَّمَدُ", matchId: 2 },
+            { id: 3, text: "لَمْ يَلِدْ وَلَمْ يُولَدْ", matchId: 3 },
+            { id: 4, text: "وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ", matchId: 4 }
+        ],
+        meanings: [
+            { matchId: 2, text: "الذي يقصده الجميع في حوائجهم" },
+            { matchId: 1, text: "الله واحد لا شريك له" },
+            { matchId: 4, text: "لا يوجد له شبيه ولا مثيل" },
+            { matchId: 3, text: "ليس له ولد ولا والد" }
+        ]
+    },
+    falaq: {
+        title: "سورة الفلق",
+        items: [
+            { id: 1, text: "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ", matchId: 1 },
+            { id: 2, text: "مِن شَرِّ مَا خَلَقَ", matchId: 2 },
+            { id: 3, text: "وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ", matchId: 3 },
+            { id: 4, text: "وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ", matchId: 4 },
+            { id: 5, text: "وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ", matchId: 5 }
+        ],
+        meanings: [
+            { matchId: 2, text: "من أذى جميع المخلوقات" },
+            { matchId: 5, text: "من شر الذي يتمنى زوال النعمة" },
+            { matchId: 1, text: "أستجير برب الصبح والفلَق" },
+            { matchId: 4, text: "من شر الساحرات" },
+            { matchId: 3, text: "من شر الليل إذا أظلم" }
+        ]
+    },
+    nas: {
+        title: "سورة الناس",
+        items: [
+            { id: 1, text: "قُلْ أَعُوذُ بِرَبِّ النَّاسِ", matchId: 1 },
+            { id: 2, text: "مَلِكِ النَّاسِ", matchId: 2 },
+            { id: 3, text: "إِلَٰهِ النَّاسِ", matchId: 3 },
+            { id: 4, text: "مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ", matchId: 4 },
+            { id: 5, text: "الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ", matchId: 5 },
+            { id: 6, text: "مِنَ الْجِنَّةِ وَالنَّاسِ", matchId: 6 }
+        ],
+        meanings: [
+            { matchId: 3, text: "معبود الناس وحده لا معبود بحق غيره" },
+            { matchId: 1, text: "أستجير بخالق الناس ومربيهم" },
+            { matchId: 5, text: "الذي يبث الشر والشك في القلوب" },
+            { matchId: 2, text: "مالكهم والملِك الحقيقي لهم" },
+            { matchId: 6, text: "الوسواس يكون من الشياطين ومن البشر" },
+            { matchId: 4, text: "الشيطان الذي يختفي عند ذكر الله" }
+        ]
+    }
 };
 
-let currentSurah = 'ikhlas';
-let currentQuestionIndex = 0;
+let currentSurahKey = 'ikhlas';
 let score = 0;
+let draggedItem = null;
 
-window.onload = () => {
-    loadQuestion();
-};
-
-function switchSurah(surahKey, element) {
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    element.classList.add('active');
-
-    currentSurah = surahKey;
-    restartQuiz();
-}
-
-function loadQuestion() {
-    const quizBody = document.getElementById('quiz-body');
-    const resultScreen = document.getElementById('result-screen');
-    const questions = questionsData[currentSurah];
-
-    if (currentQuestionIndex >= questions.length) {
-        quizBody.style.display = 'none';
-        resultScreen.style.display = 'block';
-        document.getElementById('final-score').innerText = `درجتك: ${score} / ${questions.length}`;
-        return;
-    }
-
-    quizBody.style.display = 'block';
-    resultScreen.style.display = 'none';
-
-    const q = questions[currentQuestionIndex];
-    document.getElementById('question-count').innerText = `الآية ${currentQuestionIndex + 1} من ${questions.length}`;
-    document.getElementById('score-count').innerText = `النقاط: ${score}`;
+function switchMatchSurah(surahKey, btnElement) {
+    currentSurahKey = surahKey;
     
-    document.getElementById('image-display').src = q.img;
-    document.getElementById('hint-text').innerText = q.hint;
-    document.getElementById('feedback').innerText = '';
-
-    const optionsContainer = document.getElementById('options-container');
-    optionsContainer.innerHTML = '';
-
-    q.options.forEach((opt, index) => {
-        const btn = document.createElement('button');
-        btn.className = 'opt-btn';
-        btn.innerText = opt;
-        btn.onclick = () => selectAnswer(btn, index === q.correct);
-        optionsContainer.appendChild(btn);
-    });
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    if (btnElement) btnElement.classList.add('active');
+    
+    initGame();
 }
 
-function selectAnswer(button, isCorrect) {
-    const buttons = document.querySelectorAll('.opt-btn');
-    buttons.forEach(btn => btn.disabled = true);
-
-    const feedback = document.getElementById('feedback');
-
-    if (isCorrect) {
-        button.classList.add('correct-anim');
-        feedback.style.color = '#2e7d32';
-        feedback.innerText = '🎉 إجابة صحيحة! أحسنت التخمين';
-        score++;
-    } else {
-        button.classList.add('wrong-anim');
-        feedback.style.color = '#c62828';
-        feedback.innerText = '💡 إجابة خاطئة، ركز في الصورة والآية القادمة';
+function initGame() {
+    const container = document.querySelector('.match-container');
+    const surahTitle = document.getElementById('surah-title');
+    
+    if (surahTitle) {
+        surahTitle.innerText = surahData[currentSurahKey].title;
     }
 
-    setTimeout(() => {
-        currentQuestionIndex++;
-        loadQuestion();
-    }, 1200);
+    container.innerHTML = '';
+
+    const versesCol = document.createElement('div');
+    versesCol.className = 'match-column';
+
+    const meaningsCol = document.createElement('div');
+    meaningsCol.className = 'match-column';
+
+    // 1. إضافة الآيات
+    surahData[currentSurahKey].items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'draggable-card';
+        card.draggable = true;
+        card.innerText = item.text;
+        card.dataset.matchId = item.matchId;
+
+        card.addEventListener('dragstart', dragStart);
+        card.addEventListener('dragend', dragEnd);
+
+        versesCol.appendChild(card);
+    });
+
+    // 2. إضافة المعاني
+    surahData[currentSurahKey].meanings.forEach(item => {
+        const dropZone = document.createElement('div');
+        dropZone.className = 'drop-zone';
+        dropZone.innerText = item.text;
+        dropZone.dataset.matchId = item.matchId;
+
+        dropZone.addEventListener('dragover', dragOver);
+        dropZone.addEventListener('dragenter', dragEnter);
+        dropZone.addEventListener('dragleave', dragLeave);
+        dropZone.addEventListener('drop', dragDrop);
+
+        meaningsCol.appendChild(dropZone);
+    });
+
+    container.appendChild(versesCol);
+    container.appendChild(meaningsCol);
 }
 
-function restartQuiz() {
-    currentQuestionIndex = 0;
-    score = 0;
-    loadQuestion();
+function dragStart() {
+    draggedItem = this;
+    setTimeout(() => this.classList.add('hide'), 0);
 }
+
+function dragEnd() {
+    this.classList.remove('hide');
+    draggedItem = null;
+}
+
+function dragOver(e) {
+    e.preventDefault();
+}
+
+function dragEnter(e) {
+    e.preventDefault();
+    this.classList.add('hovered');
+}
+
+function dragLeave() {
+    this.classList.remove('hovered');
+}
+
+function dragDrop() {
+    this.classList.remove('hovered');
+    
+    if (draggedItem && draggedItem.dataset.matchId === this.dataset.matchId) {
+        this.classList.add('correct-match');
+        this.innerHTML = `✅ ${draggedItem.innerText} <br><small>(${this.innerText})</small>`;
+        draggedItem.remove();
+        
+        score += 10;
+        const scoreElem = document.getElementById('score-count');
+        if (scoreElem) scoreElem.innerText = score;
+    } else {
+        this.classList.add('wrong-match');
+        setTimeout(() => this.classList.remove('wrong-match'), 800);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', initGame);
